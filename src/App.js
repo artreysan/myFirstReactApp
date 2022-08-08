@@ -6,7 +6,8 @@ import Navigation from './components/Navigation';
 function App() {
     return (
       <div className="App">
-        <Navigation/>
+        <Navigation titulo="Mi primera navegacion"/>
+                    
         <img src={logo} className="App-logo" alt="logo" />
           
       </div>

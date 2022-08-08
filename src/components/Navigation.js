@@ -6,7 +6,7 @@ class Navigation extends Component{
        <div>
             <nav className="navbar navbar-dark bg-dark">
                 <a href="#" className="btn btn-primary stretched-link">
-                    Task
+                    {this.props.titulo} 
                 </a>
             </nav>
        </div> 
