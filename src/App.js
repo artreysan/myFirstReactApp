@@ -24,12 +24,16 @@ class App extends Component{
       const tareas = this.state.tareas.map((tarea,i)=>{
         return(
           <div className='col-md-4'>
-            <div className = "card">
+            <div className = "card mt-4"a>
               <div className='card-header'>
                 <h3>{tarea.title}</h3>
+                <span className="badge badge-pill badge-danger ">
+                  {tarea.priority}
+                </span>
               </div>
               <div className='card-body'>
                 <p>{tarea.description}</p>
+                <p><mark>{tarea.responsible}</mark></p>
               </div>
             </div>
           </div>
@@ -39,12 +43,16 @@ class App extends Component{
       return (
       <div className="App">
           {/*Componente en src/components/Navigation*/}
-          <Navigation titulo="Task">   
+          <Navigation titulo="Task" numTask={this.state.tareas.length}>   
           </Navigation>
 
           {/*Estado*/}
 
-          {tareas /*Llamamos a la constante que definimos en la parte de arriba*/}
+          <div className='container'>
+            <div className='row mt-4'>
+              {tareas /*Llamamos a la constante que definimos en la parte de arriba*/}
+            </div>
+          </div>
 
         <img src={logo} className="App-logo" alt="logo" />
       </div>
