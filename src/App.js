@@ -11,24 +11,41 @@ class App extends Component{
   constructor(){
     super();
     this.state = {
-      title: "Aplicacion de tareas",
-      ntarea: 10
+      tareas:todos
     };
   }  
 
 
     render(){
+      console.log("Mostrar datos antes de pintarlos");
+      console.log(this.state.tareas); 
+
+      //Recorre cada tarea o Todo que sacamos del JSON
+      const tareas = this.state.tareas.map((tarea,i)=>{
+        return(
+          <div className='col-md-4'>
+            <div className = "card">
+              <div className='card-header'>
+                <h3>{tarea.title}</h3>
+              </div>
+              <div className='card-body'>
+                <p>{tarea.description}</p>
+              </div>
+            </div>
+          </div>
+        );
+      });
+
       return (
       <div className="App">
           {/*Componente en src/components/Navigation*/}
           <Navigation titulo="Task">   
           </Navigation>
+
           {/*Estado*/}
-          <nav className="navbar navbar-dark bg-dark">  
-            <p href="#" className="text-light stretched-link">
-              {this.state.title} - {this.state.ntarea}
-            </p>
-          </nav>
+
+          {tareas /*Llamamos a la constante que definimos en la parte de arriba*/}
+
         <img src={logo} className="App-logo" alt="logo" />
       </div>
     );
