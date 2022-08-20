@@ -1,63 +1,88 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Navigation from './components/Navigation';
-import {todos} from './todos.json';
 
-{/*Estados*/}
-console.log(todos);
+// data
+import { todos } from './todos.json';
 
-class App extends Component{
-  constructor(){
+// subcomponents
+import Navigation from './components/Navigation'
+import TodoForm from './components/TodoForm';
+
+class App extends Component {
+  constructor() {
     super();
     this.state = {
-      tareas:todos
-    };
-  }  
+      todos
+    }
+    this.handleAddTodo = this.handleAddTodo.bind(this);
+  }
 
+  removeTodo(index) {
+    this.setState({
+      todos: this.state.todos.filter((e, i) => {
+        return i !== index
+      })
+    });
+  }
 
-    render(){
-      console.log("Mostrar datos antes de pintarlos");
-      console.log(this.state.tareas); 
+  handleAddTodo(todo) {
+    this.setState({
+      todos: [...this.state.todos, todo]
+    })
+  }
 
-      //Recorre cada tarea o Todo que sacamos del JSON
-      const tareas = this.state.tareas.map((tarea,i)=>{
-        return(
-          <div className='col-md-4'>
-            <div className = "card mt-4"a>
-              <div className='card-header'>
-                <h3>{tarea.title}</h3>
-                <span className="badge badge-pill badge-danger ">
-                  {tarea.priority}
-                </span>
-              </div>
-              <div className='card-body'>
-                <p>{tarea.description}</p>
-                <p><mark>{tarea.responsible}</mark></p>
-              </div>
-            </div>
-          </div>
-        );
-      });
-
+  render() {
+    const todos = this.state.todos.map((todo, i) => {
       return (
-      <div className="App">
-          {/*Componente en src/components/Navigation*/}
-          <Navigation titulo="Task" numTask={this.state.tareas.length}>   
-          </Navigation>
-
-          {/*Estado*/}
-
-          <div className='container'>
-            <div className='row mt-4'>
-              {tareas /*Llamamos a la constante que definimos en la parte de arriba*/}
+        <div className="col-md-4" key={i}>
+          <div className="card mt-4">
+            <div className="card-title text-center">
+              <h3>{todo.title}</h3>
+              <span className="badge badge-pill badge-danger ml-2">
+                {todo.priority}
+              </span>
+            </div>
+            <div className="card-body">
+              {todo.description}
+            </div>
+            <div className="card-footer">
+              <button
+                className="btn btn-danger"
+                onClick={this.removeTodo.bind(this, i)}>
+                Delete
+              </button>
             </div>
           </div>
+        </div>
+      )
+    });
 
-        <img src={logo} className="App-logo" alt="logo" />
+    // RETURN THE COMPONENT
+    return (
+      <div className="App">
+
+        <Navigation titulo="Task" numTask={this.state.todos.length}>   
+        </Navigation>
+
+        <div className="container">
+          <div className="row mt-4">
+
+            <div className="col-md-4 text-center">
+                <img src={logo} className="App-logo" alt="logo" />
+              <TodoForm onAddTodo={this.handleAddTodo}></TodoForm>
+            </div>
+
+            <div className="col-md-8">
+              <div className="row">
+                {todos}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
-    }
+  }
 }
 
 export default App;
